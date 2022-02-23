@@ -1,6 +1,6 @@
 # Livros
 
-Esse repositório contém resumos de livros que li ao longo de minha carreira, separados por pastas com um README.md dentro deles contendo o contéudo desses resumos separados por capítulos. Alguns estão incompletos por que achei que o capítulo descrito não era de meu interesse (como GUI no java usando o swing) ou não achei interessante escrever um resumo por ser um assunto básico.
+Esse repositório contém resumos de livros que li ao longo da minha carreira, separados por pastas com um README.md dentro deles contendo o contéudo desses resumos separados por capítulos. Alguns estão incompletos por que achei que o capítulo descrito não era do meu interesse (como GUI no java usando o swing) ou não achei interessante escrever um resumo por ser um assunto básico.
 
 ## Acesse o resumo clicando na capa do livro
 
