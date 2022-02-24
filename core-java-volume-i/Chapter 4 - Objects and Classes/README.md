@@ -1,5 +1,5 @@
-### 4.1 Introdução a OOP
 
+### 4.1 Introdução a OOP
 Em OOP, é importante identificar três características chaves de objetos:
 - O **comportamento** do objeto: o que ele pode fazer e quais seus métodos.
 - O **estado** do objeto, como ele reage quando são invocados os métodos
@@ -28,3 +28,40 @@ Cada flecha representa uma relação específica:
 <img width="500" height="300" src="https://i.imgur.com/DwyUS6v.png" />
 
 ### 4.2 Usando classes predefinidas
+
+Em Java, temos diversas classes disponíveis de forma padrão, como por exemplo *Math* e *Date*. Classes precisam ser construídas e terem seu estado inicial especificado e isso é feito por meio de métodos contrutores.
+
+Existem linguagens de programação como o Visual Basic que tem alguns desses tipos de forma *built-in*. Apesar de parecer uma melhor escolha na estrutura da linguagem, essa abordagem pode sofrer problemas, já que existem lugares em que as datas são representadas de outra forma. Com classes, caso isso acontecesse, os programadores podem se sentir livres para inserir comportamentos para surprir a falta de alguma funcionalidade.
+
+Podemos instanciar uma classe utilizando a palavra chave **new**
+
+<code id="first-code-block">Date date = new Date();</code> 
+
+É importante definir a diferença entre *objetos* e *variáveis objetos*. Enquanto o primeiro é um objeto que foi instanciado utilizando **new**, como em [(1)](#first-code-block). O segundo é uma variável que tem apenas um tipo especifico e que pode ser atribuido a um outro objeto já instanciado:
+
+```java
+Date deadline;
+s = deadline.toString() // erro
+```
+
+```java
+Date deadline;
+deadline = date;
+s = deadline.toString(); // correto
+```
+
+O segundo bloco de código acima permite que deadline tenha acesso ao método *toString* já que ele foi atribuido a um objeto com classe *Date*.
+
+Pode-se pensar em variáveis objetos como o funcionamento de ponteiros de objetos em C++, em que, ao serem atribuidos à algum objeto, ele é feito por referência, tendo suas propriedades copiadas, mas, caso uma mudança ocorra em `date`, ela também ocorrerá em `deadline`. Para realizar uma cópia sem referências, deve-se utilizar o método *clone*.
+
+A classe *Date* do Java registra datas como um ponto específico no tempo, sendo em milissegundos que passaram desde 1 de janeiro de 1970 00:00:00 UTC. Apesar disso, não é dessa forma que humanos registram datas no dia a dia, e ele pode variar ao longo do mundo. Para isso, existe a classe *LocalDate*.
+
+Objetos dessa classe não são instanciados, mas sim usados *factory methods* para chamar seus construtores. Podemos criar utilizando seus métodos diretamente
+
+```java
+LocalDate.now(); // retorna uma data com a data em que o objeto foi criado
+LocalDate local = LocalDate.of(1999, 12, 31); 
+// retorna data específica que foi fornecida em seus parâmetros
+```
+
+
