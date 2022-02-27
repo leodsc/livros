@@ -206,3 +206,129 @@ Durante o funcionamento do método, eles são trocados entre x e y, porém essas
 <img src="https://i.imgur.com/CAlGoZX.png">
 
 ### 4.6 Construção de Objetos
+
+O Java oferece algumas maneiras para escrever construtores. Um exemplo é o uso de _sobrecarga_, quando vários métodos tem o mesmo nome mas parâmetros diferentes. O compilador identifica qual construtor é o correto a ser chamado e, caso não seja possível utilizar nenhum deles, ocorre um erro de compilação. Esse processo tem o nome de _resolução de sobrecarga_. É possível utilizar a _sobrecarga_ em qualquer método de uma classe.
+
+```java
+class Name {
+  public static void showName(String firstName) {
+    System.out.println(firstName);
+  }
+
+  public static void showName(String firstName, String lastName) {
+    System.out.println(firstName + " " + lastName);
+  }
+}
+```
+
+<span id="default-values">Os campos de uma classe tem valores padrões a depender do seu tipo. Por exemplo, números são iniciados com 0, booleanos com `false` e objetos com `null`.</span> Apesar disso, é considerado uma má prática usar valores padrões em objetos, já que o código fica mais difícil de entender se os atributos são inicializados de forma invisível.
+Essa é uma outra diferença entre variáveis locais e atributos, enquanto as váriaveis locais **precisam** ser inicializadas, os atributos não.
+
+Muitas classes contém construtores que não tem nenhum parâmetro e são usados para colocar valores padrões.
+
+```java
+class Employee {
+  // ... content
+  public Employee() {
+    this.name = "";
+    this.salary = 0;
+    this.hireDay = LocalDate.now();
+  }
+}
+```
+
+Uma classe sem construtores tem um construtor padrão e ele coloca **todos** os atributos com seus [respectivos valores padrão](#default-values). Porém, uma classe com um construtor definido como `Employee(String name ...)` **não** pode ser inicializado usando esse construtor padrão do Java `Employee()` e seus argumentos devem ser fornecidos.
+
+```java
+var e = new Employee(String name...) // ok
+var e2 = new Employee() // erro
+```
+
+Se quisermos usar um construtor padrão quando já temos um definido, **devemos** informar quais valores seus atributos terão.
+
+Podemos inicializar campos dentro das classes utilizando os métodos dessa classe. Por exemplo:
+
+```java
+class Employee {
+  private static int nextId;
+  private int id  assignId();
+
+  private static int assignId() {
+    int r = nextId;
+    nextId++;
+    return r;
+  }
+}
+```
+
+A palavra chave `this` tem como função, além de selecionar campos da própria classe, temos que é possivel chamar outro construtor de uma mesma classe caso o primeiro chamado daquele construtor seja da forma `this(...)`. Inicializar um construtor com o this dessa forma permite que não seja necessário escrever código de construção similares mais de uma vez. **não recomendável**
+
+```java
+class Employee {
+  public Employee(double) {
+    // calls Employee(String, double)
+    this("Employee #" + nextId, s);
+    nextId++;
+  }
+}
+```
+
+Em Java, há três maneiras de se inicializar campo dentro de uma classe:
+
+- Colocando seu valor em um construtor
+- Inicializando esse campo dentro da própria classe
+- Usando _blocos de inicialização_.
+
+A última forma permite que um código em Java seja rodado sempre quando uma classe é construída:
+
+```java
+class Employee {
+  private static int nextId;
+  private int id;
+  private String name;
+  private double salary;
+
+  // bloco de inicialização do objeto
+  {
+    id = nextId;
+    nextId++;
+  }
+
+  public Employee(String n, double s) {
+    name = n;
+    salary = s;
+  }
+
+  public Employee() {
+    name = "";
+    salary = 0;
+  }
+}
+```
+
+No código acima, o bloco de inicialização é rodado antes do construtor da classe. Apesar disso, **nunca** é recomendado usar blocos de inicialização, sendo mais direto simplesmente colocar o código desse bloco dentro do construtor da classe. Como é uma boa prática que outros programadores possam ler seu código sem maiores dificuldades, usar construtores dentro de outros também **não é recomendável**.
+Caso os campos estáticos da classe necessitem de uma lógica complexa, é possível inicializá-las usando _blocos estáticos_.
+
+```java
+class Employee {
+  static {
+    var generator = new Random();
+    nextId = generator.nextInt(10000);
+  }
+}
+```
+
+### 4.7 Pacotes
+
+- Em Java, é comum usar nomes de sites ao contrário para garantir que uma classe de um pacote que tenha um nome igual a uma classe de outro pacote, e assim, evitar quaisquer possíveis conflitos.
+- Quando usamos o `import`, temos que informar qual pacote queremos importar caso seja usado a sintaxe de `import java.*`, já que, não é possível importar pacotes que são subpacotes de `java`, por exemplo.
+- Caso duas classes tenham o mesmo nome em pacotes diferentes e desejamos usar ambas no código, não poderemos usar o `import`. Para isso, deve ser usado o nome **inteiro** de onde a classe se localiza:
+
+```java
+var deadLine = new java.util.Date();
+var today = new java.sql.Date(...);
+```
+
+Não é possivel adicionar classes externas dentro do pacote e subpacotes `java.`. Isso se deve pra criar uma proteção e evitar que pessoas mal intencionadas possam adicionar código malicioso dentro desses pacotes. Uma forma de proteger outros pacotes é usando o `module`, que será discutido no [Capítulo 9 do Volume II](link).
+
+Além de armazenar classes em subdiretores do sistema operacional, podemos colocá-las em arquivo **JAR**. Esse arquivo tem um formato comprimido para armazenar todas as classes e subdiretórios em uma formato comprimido, salvando espaço e melhorando a performance. Normalmente dependências de terceiros vão ser fornecidas por meio de arquivo JAR.
