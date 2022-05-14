@@ -7,3 +7,7 @@ Esse repositório contém resumos de livros que li ao longo da minha carreira, s
 ### Core Java Volume I: Fundamentals
 
 [<img width="200" height="300" src="https://images-na.ssl-images-amazon.com/images/I/41tWYbxKfCL._SX380_BO1,204,203,200_.jpg" />](core-java-volume-i)
+
+### Clean Code: A Handbook of Agile Software Craftsmanship
+
+[<img width="200" height="300" src="https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg" />](clean-code)
